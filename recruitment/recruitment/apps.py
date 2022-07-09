@@ -17,7 +17,6 @@ class UniversalManagerApp(AppConfig):
     name = 'recruitment'
 
     def ready(self):
-        print(settings.__dict__)
         for app in settings.SHOW_MODEL_LIST:
             # 遍历指定应用下的model
             models = apps.get_app_config(app).get_models() 

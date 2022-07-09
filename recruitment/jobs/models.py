@@ -8,28 +8,51 @@ from django.utils.translation import gettext_lazy as _
 # 候选人学历
 DEGREE_TYPE = ((u'本科', u'本科'), (u'硕士', u'硕士'), (u'博士', u'博士'))
 
-JobTypes = [
-    (0,"技术类"),
-    (1,"产品类"),
-    (2,"运营类"),
-    (3,"设计类"),
-    (4,"市场营销类")
-]
+# JobTypes = [
+#     (0,"技术类"),
+#     (1,"产品类"),
+#     (2,"运营类"),
+#     (3,"设计类"),
+#     (4,"市场营销类")
+# ]
 
-Cities = [
-    (0,"北京"),
-    (1,"上海"),
-    (2,"深圳"),
-    (3,"杭州"),
-    (4,"广州")
-]
+# Cities = [
+#     (0,"北京"),
+#     (1,"上海"),
+#     (2,"深圳"),
+#     (3,"杭州"),
+#     (4,"广州")
+# ]
+
+
+class City(models.Model):
+    city_name = models.CharField(max_length=250,null=False,unique=True,blank=False)
+
+    class Meta:
+        verbose_name = _('城市')
+        verbose_name_plural = _('城市列表')
+
+    def __str__(self):
+        return self.city_name
+
+class JobType(models.Model):
+    jobtype_name = models.CharField(max_length=250,null=False,unique=True,blank=False)
+
+    class Meta:
+        verbose_name = _('职位类型')
+        verbose_name_plural = _('职位类型')
+
+    def __str__(self):
+        return self.jobtype_name
 
 
 class Job(models.Model):
     # Translators: 职位实体的翻译
-    job_type = models.SmallIntegerField(blank=False, choices=JobTypes, verbose_name=_("职位类别"))
+    # job_type = models.SmallIntegerField(blank=False, choices=JobTypes, verbose_name=_("职位类别"))
+    job_type = models.ForeignKey(JobType, on_delete=models.DO_NOTHING)
     job_name = models.CharField(max_length=250, blank=False, verbose_name=_("职位名称"))
-    job_city = models.SmallIntegerField(choices=Cities, blank=False, verbose_name=_("工作地点"))
+    # job_city = models.SmallIntegerField(choices=Cities, blank=False, verbose_name=_("工作地点"))
+    job_city = models.ForeignKey(City, on_delete=models.DO_NOTHING)
     job_responsibility = models.TextField(max_length=1024, verbose_name=_("职位职责"))
     job_requirement = models.TextField(max_length=1024, blank=False, verbose_name=_("职位要求"))
     creator = models.ForeignKey(User, verbose_name=_("创建人"), null=True, on_delete=models.SET_NULL)
@@ -48,7 +71,8 @@ class Resume(models.Model):
     # Translators: 简历实体的翻译
     username = models.CharField(max_length=135, verbose_name=_('姓名'))
     applicant = models.ForeignKey(User, verbose_name=_("申请人"), null=True, on_delete=models.SET_NULL)
-    city = models.CharField(max_length=135, verbose_name=_('城市'))
+    # city = models.CharField(max_length=135, verbose_name=_('城市'))
+    city = models.ForeignKey(City, on_delete=models.DO_NOTHING)
     phone = models.CharField(max_length=135,  verbose_name=_('手机号码'))
     email = models.EmailField(max_length=135, blank=True, verbose_name=_('邮箱'))
     apply_position = models.CharField(max_length=135, blank=True, verbose_name=_('应聘职位'))
