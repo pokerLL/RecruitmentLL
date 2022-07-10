@@ -40,7 +40,7 @@ INSTALLED_APPS = [
     'jobs',
     'interview',
     'recruitment.apps.UniversalManagerApp',
-
+    'rest_framework',
 ]
 
 MIDDLEWARE = [
@@ -148,3 +148,11 @@ SHOW_MODEL_LIST = ['jobs','interview']
 
 # 超级用户密码
 DJANGO_SUPERUSER_PASSWORD = "1"
+
+REST_FRAMEWORK = {
+    # Use Django's standard `django.contrib.auth` permissions,
+    # or allow read-only access for unauthenticated users.
+    'DEFAULT_PERMISSION_CLASSES': [
+        #'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
+    ]
+}

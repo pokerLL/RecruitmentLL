@@ -18,10 +18,13 @@ from django.urls import path,include
 
 from django.utils.translation import gettext_lazy as _
 
+
 urlpatterns = [
-    path('', admin.site.urls),
+    # path('', admin.site.urls),
     path('admin/', admin.site.urls),
-    path('i18n/', include('django.conf.urls.i18n')),
+    path('i18n/', include('django.conf.urls.i18n')), #国际化
+    path('api-auth/', include('rest_framework.urls')), # DRF AUTH
+    path('api/', include('jobs.urls')), # DRF API
 ]
 
 admin.site.site_header = _('匠果科技招聘管理系统')
