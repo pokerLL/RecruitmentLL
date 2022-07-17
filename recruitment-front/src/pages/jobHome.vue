@@ -1,28 +1,46 @@
 <template>
-    <job-card v-for="item in joblist" :key="item[0]" :jobid="item[0]" :jobtitle="item[1]" :jobcity="item[2]"></job-card>
+    <!-- <job-card v-for="item in joblist" :key="item.id" :jobid="item.id" :jobtitle="item.job_name"
+            :jobcity="item.job_city.city_name"></job-card> -->
+    <div>
+        <el-table :data="joblist" height="250" style="width: 100%">
+            <el-table-column prop="id" label="序号" width="180" />
+            <el-table-column prop="job_name" label="职位" width="180" />
+            <el-table-column prop="job_type.jobtype_name" label="类型" width="180" />
+            <el-table-column prop="job_city.city_name" label="城市" width="180" />
+            <el-table-column lable="操作" #default="scope">
+                <el-button @click="goToDetailPage(scope.row.id)">查看</el-button>
+            </el-table-column>
+        </el-table>
+    </div>
+
 </template>
 
 <script setup>
-import { computed } from '@vue/runtime-core';
-import jobCard from '../components/job/jobCard.vue';
+import { computed, ref } from "vue";
+// import jobCard from '../components/job/jobCard.vue';
+import { getJobList } from "../api/job"
+import { useRouter } from "vue-router"
 
-// joblist = [
-//     [0,"C++程序员","北京"],
-//     [1,"C程序员","上海"],
-//     [2,"Java程序员","深圳"],
-//     [3,"Python程序员","广州"],
-//     [4,"Go程序员","纽约"],
-//     [5,"Ruby程序员","东京"],
-// ]
+let router = useRouter()
 
-let joblist = computed(()=>[
-    [0,"C++程序员","北京"],
-    [1,"C程序员","上海"],
-    [2,"Java程序员","深圳"],
-    [3,"Python程序员","广州"],
-    [4,"Go程序员","纽约"],
-    [5,"Ruby程序员","东京"],
-])
+let joblist = ref([])
+
+function init_data() {
+    getList()
+}
+
+function getList(params) {
+    getJobList().then(res => {
+        console.log(res)
+        joblist.value = res
+    })
+}
+
+function goToDetailPage(jid) {
+    // console.log("goToDetailPage"+props.jobtitle);
+    router.push({ name: 'detail', params: { id: jid } })
+}
+init_data()
 
 </script>
 

@@ -3,8 +3,9 @@ import {
     createWebHashHistory,
 } from "vue-router"
 
-import JobHome from "../pages/jobHome.vue"
-import JobDeatil from "../pages/jobDetail.vue"
+import JobHome from "../pages/JobHome.vue"
+import JobDeatil from "../pages/JobDetail.vue"
+import PostResume from "../pages/PostResume.vue"
 const routes = [
     {
         path: "/",
@@ -14,6 +15,11 @@ const routes = [
         path: "/detail/:id",
         name: "detail",
         component: JobDeatil,
+        props:true,
+    }, {
+        path: "/post",
+        name: "post",
+        component: PostResume,
         props:true,
     }
 ]
