@@ -27,7 +27,7 @@
                 </el-select>
             </el-form-item>
             <el-form-item label="生源地">
-                <el-input v-model="objData.form.born_address" />
+                <el-input v-model="objData.form.from_address" />
             </el-form-item>
             <el-form-item label="专业">
                 <el-input v-model="objData.form.major" />
@@ -97,7 +97,7 @@ const objData = reactive({
         phone: '',
         email: '',
         apply_position_id: '',
-        born_address: '',
+        from_address: '',
         gender: '',
         picture: '',
         attachment: '',
@@ -118,7 +118,7 @@ const resetForm = () => {
         phone: '',
         email: '',
         apply_position_id: '',
-        born_address: '',
+        from_address: '',
         gender: '',
         picture: '',
         attachment: '',

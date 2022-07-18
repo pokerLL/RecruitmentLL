@@ -16,22 +16,21 @@ HR_SCORE_TYPE = (('S', 'S'), ('A', 'A'), ('B', 'B'), ('C', 'C'))
 
 class Candidate(models.Model):
     # 基础信息
-    userid = models.IntegerField(unique=True, blank=True, null=True, verbose_name=u'应聘者ID')
-    username = models.CharField(max_length=135, verbose_name=u'姓名')
-    city = models.CharField(max_length=135, verbose_name=u'城市')
-    phone = models.CharField(max_length=135, verbose_name=u'手机号码')
-    email = models.EmailField(max_length=135, blank=True, verbose_name=u'邮箱')
-    apply_position = models.CharField(max_length=135, blank=True, verbose_name=u'应聘职位')
-    born_address = models.CharField(max_length=135, blank=True, verbose_name=u'生源地')
-    gender = models.CharField(max_length=135, blank=True, verbose_name=u'性别')
-    candidate_remark = models.CharField(max_length=135, blank=True, verbose_name=u'候选人信息备注')
+    username = models.CharField(max_length=135,null=True, verbose_name=u'姓名')
+    city = models.CharField(max_length=135,null=True, verbose_name=u'城市')
+    phone = models.CharField(max_length=135,null=True, verbose_name=u'手机号码')
+    email = models.EmailField(max_length=135, null=True,blank=True, verbose_name=u'邮箱')
+    apply_position = models.CharField(max_length=135,null=True, blank=True, verbose_name=u'应聘职位')
+    from_address = models.CharField(max_length=135,null=True, blank=True, verbose_name=u'生源地')
+    gender = models.CharField(max_length=135,null=True, blank=True, verbose_name=u'性别')
+    candidate_remark = models.CharField(max_length=135,null=True, blank=True, verbose_name=u'候选人信息备注')
 
     # 学校与学历信息
-    bachelor_school = models.CharField(max_length=135, blank=True, verbose_name=u'本科学校')
-    master_school = models.CharField(max_length=135, blank=True, verbose_name=u'研究生学校')
-    doctor_school = models.CharField(max_length=135, blank=True, verbose_name=u'博士生学校')
-    major = models.CharField(max_length=135, blank=True, verbose_name=u'专业')
-    degree = models.CharField(max_length=135, choices=DEGREE_TYPE, blank=True, verbose_name=u'学历')
+    bachelor_school = models.CharField(max_length=135,null=True, blank=True, verbose_name=u'本科学校')
+    master_school = models.CharField(max_length=135,null=True, blank=True, verbose_name=u'研究生学校')
+    doctor_school = models.CharField(max_length=135,null=True, blank=True, verbose_name=u'博士生学校')
+    major = models.CharField(max_length=135,null=True, blank=True, verbose_name=u'专业')
+    degree = models.CharField(max_length=135,null=True, choices=DEGREE_TYPE, blank=True, verbose_name=u'学历')
 
     # 综合能力测评成绩，笔试测评成绩
     test_score_of_general_ability = models.DecimalField(decimal_places=1, null=True, max_digits=3, blank=True,
@@ -50,11 +49,12 @@ class Candidate(models.Model):
     first_result = models.CharField(max_length=256, choices=FIRST_INTERVIEW_RESULT_TYPE, blank=True,
                                     verbose_name=u'初试结果')
     first_recommend_position = models.CharField(max_length=256, blank=True, verbose_name=u'推荐部门')
-    first_interviewer_user = models.ForeignKey(User, related_name='first_interviewer_user', blank=True, null=True, on_delete=models.CASCADE, verbose_name=u'面试官')
+    first_interviewer_user = models.ForeignKey(User, related_name='first_interviewer_user', blank=True, null=True, on_delete=models.CASCADE, verbose_name=u'初面面试官')
 
     first_remark = models.CharField(max_length=135, blank=True, verbose_name=u'初试备注')
 
     # 第二轮面试记录
+
     second_score = models.DecimalField(decimal_places=1, null=True, max_digits=2, blank=True, verbose_name=u'专业复试得分',
                                        help_text=u'1-5分，极优秀: >=4.5，优秀: 4-4.4，良好: 3.5-3.9，一般: 3-3.4，较差: <3分')
     second_learning_ability = models.DecimalField(decimal_places=1, null=True, max_digits=2, blank=True,
@@ -97,11 +97,6 @@ class Candidate(models.Model):
         db_table = u'candidate'
         verbose_name = u'应聘者'
         verbose_name_plural = u'应聘者'
-
-        permissions = [
-            ("export", "Can export candidate list"),
-            ("notify", "notify interviewer for candidate review"),
-        ]
 
     # Python 2 优先使用这个方法，把对象转换成字符串； 如果没有__unicode__()方法，使用 __str__()方法
     def __unicode__(self):

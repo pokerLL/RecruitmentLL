@@ -64,11 +64,14 @@ class Job(models.Model):
         verbose_name_plural = _('职位列表')
 
     def __str__(self):
-        return self.job_name
+        return str(self.job_city) +"-"+self.job_name+"["+str(self.job_type)+"]"
 
 
 class Resume(models.Model):
     # Translators: 简历实体的翻译
+
+    has_goto_interview = models.BooleanField(default=False, verbose_name=_('已进入面试'))
+
     username = models.CharField(max_length=135, verbose_name=_('姓名'))
     applicant = models.ForeignKey(User, verbose_name=_("申请人"), null=True, on_delete=models.SET_NULL)
     # city = models.CharField(max_length=135, verbose_name=_('城市'))
@@ -77,7 +80,7 @@ class Resume(models.Model):
     email = models.EmailField(max_length=135, blank=True, verbose_name=_('邮箱'))
     # apply_position = models.CharField(max_length=135, blank=True, verbose_name=_('应聘职位'))
     apply_position = models.ForeignKey(Job,null=True, on_delete=models.DO_NOTHING, verbose_name=_('应聘职位'))
-    born_address = models.CharField(max_length=135, blank=True, verbose_name=_('生源地'))
+    from_address = models.CharField(max_length=135, blank=True, verbose_name=_('生源地'))
     gender = models.CharField(max_length=135, blank=True, verbose_name=_('性别'))
     picture = models.ImageField(upload_to='images/', blank=True,null=True, verbose_name=_('个人照片')) 
     attachment = models.FileField(upload_to='file/', blank=True,null=True, verbose_name=_('简历附件'))
