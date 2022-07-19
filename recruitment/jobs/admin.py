@@ -1,10 +1,10 @@
 from django.contrib import admin
-
-# Register your models here.
-
+from jobs.models import Resume
 # from jobs.utils import actions  as myaction
 from utils.actions import jobs as myaction
-from jobs.models import Resume
+
+
+# Register your models here.
 
 
 class ResumeAdmin(admin.ModelAdmin):

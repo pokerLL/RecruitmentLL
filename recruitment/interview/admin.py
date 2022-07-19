@@ -1,20 +1,19 @@
 from django.contrib import admin
 from django.db.models import Q
+from interview import admin_fields
+from interview.models import Candidate
+from utils.actions import interview as myaction
+
 
 # Register your models here.
 # 面试官只能看到自己的面试对象的资料和自己要填写的部分（以及之前面的评价，但无权修改）
 # 所有面试官可以看到所有简历
 # 只有管理员可以让简历进入面试流程以及指定面试官
 
-from interview.models import Candidate
-
-from interview import admin_fields
-from utils.actions import interview as myaction
-
 
 class InterviewerAdmin(admin.ModelAdmin):
-
-    list_display = ["username", "gender", "phone", "test_score_of_general_ability", "paper_score", "first_interviewer_user",
+    list_display = ["username", "gender", "phone", "test_score_of_general_ability", "paper_score",
+                    "first_interviewer_user",
                     "first_result", "second_interviewer_user", "second_result", "hr_interviewer_user", "hr_result"]
     # 右侧筛选条件
     list_filter = ('city', 'first_result', 'second_result', 'hr_result',
@@ -26,7 +25,7 @@ class InterviewerAdmin(admin.ModelAdmin):
     # 列表页排序字段
     ordering = ('hr_result', 'second_result', 'first_result',)
 
-    actions = (myaction.export_model_as_csv, myaction.notify_interviewer, )
+    actions = (myaction.export_model_as_csv, myaction.notify_interviewer,)
 
     def get_group_names(self, user):
         group_names = []
@@ -60,7 +59,9 @@ class InterviewerAdmin(admin.ModelAdmin):
         group_names = self.get_group_names(request.user)
         if request.user.is_superuser or 'AdminManager' in group_names:
             return qs
-        return Candidate.objects.filter(Q(first_interviewer_user=request.user) | Q(second_interviewer_user=request.user) | Q(hr_interviewer_user=request.user))
+        return Candidate.objects.filter(
+            Q(first_interviewer_user=request.user) | Q(second_interviewer_user=request.user) | Q(
+                hr_interviewer_user=request.user))
 
     def get_changelist_instance(self, request):
 

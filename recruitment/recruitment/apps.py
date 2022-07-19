@@ -1,12 +1,14 @@
-from django.contrib import admin
 from django.apps import apps, AppConfig
 from django.conf import settings
+from django.contrib import admin
+
 
 class AdminClass(admin.ModelAdmin):
     def __init__(self, model, admin_site):
         # 列表页自动显示所有的字段：
         self.list_display = [field.name for field in model._meta.fields]
         super(AdminClass, self).__init__(model, admin_site)
+
 
 # automatically register all models
 class UniversalManagerApp(AppConfig):
@@ -19,7 +21,7 @@ class UniversalManagerApp(AppConfig):
     def ready(self):
         for app in settings.SHOW_MODEL_LIST:
             # 遍历指定应用下的model
-            models = apps.get_app_config(app).get_models() 
+            models = apps.get_app_config(app).get_models()
             # 遍历所有model
             # models = apps.get_models() 
             for model in models:

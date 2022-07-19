@@ -5,8 +5,7 @@
 
 <template>
   <!--`<router-link>` 将呈现一个带有正确 `href` 属性的 `<a>` 标签-->
-    
-  <router-link to="/"> <h1>浆果科技招聘系统</h1></router-link>
+  <router-link to="/"><h1>匠果科技招聘系统</h1></router-link>
   <router-view></router-view>
 </template>
 

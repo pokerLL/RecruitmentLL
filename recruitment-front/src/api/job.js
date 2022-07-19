@@ -9,21 +9,24 @@ export function getDogNote() {
 
 export function getJobList() {
     return request({
-        url: "http://127.0.0.1:8000/api/job",
+        // url: "http://127.0.0.1:8000/api/job",
+        url: "/job",
         method: "GET"
     })
 }
 
 export function getJobInfo(id) {
     return request({
-        url: "http://127.0.0.1:8000/api/job/%s".replace("%s", id),
+        // url: "http://127.0.0.1:8000/api/job/%s".replace("%s", id),
+        url: "/job/%s".replace("%s", id),
         method: "GET"
     })
 }
 
 export function postResume(form) {
     return request({
-        url: "http://127.0.0.1:8000/api/resume/",
+        // url: "http://127.0.0.1:8000/api/resume/",
+        url: "/resume/",
         method: "POST",
         data: form,
     })

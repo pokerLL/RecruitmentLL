@@ -1,6 +1,6 @@
-from sentry_sdk.integrations.django import DjangoIntegration
 import sentry_sdk
 from recruitment.settings.base import *
+from sentry_sdk.integrations.django import DjangoIntegration
 
 ALLOWED_HOSTS = ["*"]
 
@@ -17,7 +17,6 @@ CELERY_TASK_SERIALIZER = "json"
 CELERY_TIMEZONE = "Asia/Shanghai"
 CELERY_TASK_TRACK_STARTED = True
 CELERY_TASK_TIME_LIMIT = 30 * 60
-
 
 sentry_sdk.init(
     dsn="https://examplePublicKey@o0.ingest.sentry.io/0",

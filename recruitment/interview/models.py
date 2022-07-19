@@ -1,6 +1,5 @@
-from django.db import models
 from django.contrib.auth.models import User
-
+from django.db import models
 from jobs.models import DEGREE_TYPE
 
 # 第一轮面试结果
@@ -9,28 +8,27 @@ FIRST_INTERVIEW_RESULT_TYPE = ((u'建议复试', u'建议复试'), (u'待定', u
 # 复试面试建议
 INTERVIEW_RESULT_TYPE = ((u'建议录用', u'建议录用'), (u'待定', u'待定'), (u'放弃', u'放弃'))
 
-
 # HR终面结论
 HR_SCORE_TYPE = (('S', 'S'), ('A', 'A'), ('B', 'B'), ('C', 'C'))
 
 
 class Candidate(models.Model):
     # 基础信息
-    username = models.CharField(max_length=135,null=True, verbose_name=u'姓名')
-    city = models.CharField(max_length=135,null=True, verbose_name=u'城市')
-    phone = models.CharField(max_length=135,null=True, verbose_name=u'手机号码')
-    email = models.EmailField(max_length=135, null=True,blank=True, verbose_name=u'邮箱')
-    apply_position = models.CharField(max_length=135,null=True, blank=True, verbose_name=u'应聘职位')
-    from_address = models.CharField(max_length=135,null=True, blank=True, verbose_name=u'生源地')
-    gender = models.CharField(max_length=135,null=True, blank=True, verbose_name=u'性别')
-    candidate_remark = models.CharField(max_length=135,null=True, blank=True, verbose_name=u'候选人信息备注')
+    username = models.CharField(max_length=135, null=True, verbose_name=u'姓名')
+    city = models.CharField(max_length=135, null=True, verbose_name=u'城市')
+    phone = models.CharField(max_length=135, null=True, verbose_name=u'手机号码')
+    email = models.EmailField(max_length=135, null=True, blank=True, verbose_name=u'邮箱')
+    apply_position = models.CharField(max_length=135, null=True, blank=True, verbose_name=u'应聘职位')
+    from_address = models.CharField(max_length=135, null=True, blank=True, verbose_name=u'生源地')
+    gender = models.CharField(max_length=135, null=True, blank=True, verbose_name=u'性别')
+    candidate_remark = models.CharField(max_length=135, null=True, blank=True, verbose_name=u'候选人信息备注')
 
     # 学校与学历信息
-    bachelor_school = models.CharField(max_length=135,null=True, blank=True, verbose_name=u'本科学校')
-    master_school = models.CharField(max_length=135,null=True, blank=True, verbose_name=u'研究生学校')
-    doctor_school = models.CharField(max_length=135,null=True, blank=True, verbose_name=u'博士生学校')
-    major = models.CharField(max_length=135,null=True, blank=True, verbose_name=u'专业')
-    degree = models.CharField(max_length=135,null=True, choices=DEGREE_TYPE, blank=True, verbose_name=u'学历')
+    bachelor_school = models.CharField(max_length=135, null=True, blank=True, verbose_name=u'本科学校')
+    master_school = models.CharField(max_length=135, null=True, blank=True, verbose_name=u'研究生学校')
+    doctor_school = models.CharField(max_length=135, null=True, blank=True, verbose_name=u'博士生学校')
+    major = models.CharField(max_length=135, null=True, blank=True, verbose_name=u'专业')
+    degree = models.CharField(max_length=135, null=True, choices=DEGREE_TYPE, blank=True, verbose_name=u'学历')
 
     # 综合能力测评成绩，笔试测评成绩
     test_score_of_general_ability = models.DecimalField(decimal_places=1, null=True, max_digits=3, blank=True,
@@ -49,7 +47,8 @@ class Candidate(models.Model):
     first_result = models.CharField(max_length=256, choices=FIRST_INTERVIEW_RESULT_TYPE, blank=True,
                                     verbose_name=u'初试结果')
     first_recommend_position = models.CharField(max_length=256, blank=True, verbose_name=u'推荐部门')
-    first_interviewer_user = models.ForeignKey(User, related_name='first_interviewer_user', blank=True, null=True, on_delete=models.CASCADE, verbose_name=u'初面面试官')
+    first_interviewer_user = models.ForeignKey(User, related_name='first_interviewer_user', blank=True, null=True,
+                                               on_delete=models.CASCADE, verbose_name=u'初面面试官')
 
     first_remark = models.CharField(max_length=135, blank=True, verbose_name=u'初试备注')
 
@@ -71,7 +70,8 @@ class Candidate(models.Model):
     second_disadvantage = models.TextField(max_length=1024, blank=True, verbose_name=u'顾虑和不足')
     second_result = models.CharField(max_length=256, choices=INTERVIEW_RESULT_TYPE, blank=True, verbose_name=u'专业复试结果')
     second_recommend_position = models.CharField(max_length=256, blank=True, verbose_name=u'建议方向或推荐部门')
-    second_interviewer_user = models.ForeignKey(User, related_name='second_interviewer_user', blank=True, null=True, on_delete=models.CASCADE, verbose_name=u'二面面试官')
+    second_interviewer_user = models.ForeignKey(User, related_name='second_interviewer_user', blank=True, null=True,
+                                                on_delete=models.CASCADE, verbose_name=u'二面面试官')
     second_remark = models.CharField(max_length=135, blank=True, verbose_name=u'专业复试备注')
 
     # HR终面
@@ -85,7 +85,8 @@ class Candidate(models.Model):
     hr_advantage = models.TextField(max_length=1024, blank=True, verbose_name=u'优势')
     hr_disadvantage = models.TextField(max_length=1024, blank=True, verbose_name=u'顾虑和不足')
     hr_result = models.CharField(max_length=256, choices=INTERVIEW_RESULT_TYPE, blank=True, verbose_name=u'HR复试结果')
-    hr_interviewer_user = models.ForeignKey(User, related_name='hr_interviewer_user', blank=True, null=True, on_delete=models.CASCADE, verbose_name=u'HR面试官')
+    hr_interviewer_user = models.ForeignKey(User, related_name='hr_interviewer_user', blank=True, null=True,
+                                            on_delete=models.CASCADE, verbose_name=u'HR面试官')
     hr_remark = models.CharField(max_length=256, blank=True, verbose_name=u'HR复试备注')
 
     creator = models.CharField(max_length=256, blank=True, verbose_name=u'候选人数据的创建人')
