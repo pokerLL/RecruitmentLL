@@ -3,7 +3,8 @@ from django.http import HttpResponse
 from datetime import datetime
 import csv
 
-from utils.dingtalk import send_message
+# from utils.dingtalk import send_message
+from interview.tasks import send_dingtalk_message
 
 exportable_fields = ('username', 'city', 'phone', 'bachelor_school', 'master_school', 'degree', 'first_result', 'first_interviewer_user',
                      'second_result', 'second_interviewer_user', 'hr_result', 'hr_score', 'hr_remark', 'hr_interviewer_user')
@@ -43,5 +44,7 @@ def notify_interviewer(modeladmin, request, queryset):
         first_interviewer = obj.first_interviewer_user.username
         second_interviewer = obj.second_interviewer_user.username
         hr_interviewer = obj.hr_interviewer_user.username
-        send_message("候选人 %s 进入面试环节，亲爱的面试官，请准备好面试： %s ; %s ; %s ." %
+        send_dingtalk_message.delay("候选人 %s 进入面试环节，亲爱的面试官，请准备好面试： %s ; %s ; %s ." %
                      (candidate, first_interviewer, second_interviewer, hr_interviewer))
+        # send_message("候选人 %s 进入面试环节，亲爱的面试官，请准备好面试： %s ; %s ; %s ." %
+        #              (candidate, first_interviewer, second_interviewer, hr_interviewer))
