@@ -41,7 +41,6 @@ INSTALLED_APPS = [
     'interview',
     'recruitment.apps.UniversalManagerApp',
     'rest_framework',
-    'django_celery_results',
 ]
 
 MIDDLEWARE = [
@@ -156,12 +155,3 @@ REST_FRAMEWORK = {
     ]
 }
 
-# Celery Configuration Options
-CELERY_BORKER_URL = "redis://localhost:6379/0"
-CELERY_RESULT_BACKNED = "redis://localhost:6379/1"
-CELERY_ACCEPT_CONTENT = ["application/json"]
-CELERY_RESULT_SERIALIZER = "json"
-CELERY_TASK_SERIALIZER = "json"
-CELERY_TIMEZONE = "Asia/Shanghai"
-CELERY_TASK_TRACK_STARTED = True
-CELERY_TASK_TIME_LIMIT = 30 * 60
