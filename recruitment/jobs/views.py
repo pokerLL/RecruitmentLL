@@ -36,4 +36,3 @@ class ResumeViewSet(viewsets.ViewSet):
 
 def upload(request):
     print(request.POST)
-
