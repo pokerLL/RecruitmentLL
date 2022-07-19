@@ -1,9 +1,11 @@
 from django.contrib import admin
 from django.db.models import Q
+from django.utils.html import format_html
+
 from interview import admin_fields
 from interview.models import Candidate
 from utils.actions import interview as myaction
-
+from jobs.models import Picture,Attachment
 
 # Register your models here.
 # 面试官只能看到自己的面试对象的资料和自己要填写的部分（以及之前面的评价，但无权修改）
@@ -12,9 +14,9 @@ from utils.actions import interview as myaction
 
 
 class InterviewerAdmin(admin.ModelAdmin):
-    list_display = ["username", "gender", "phone", "test_score_of_general_ability", "paper_score",
+    list_display = ["username", "gender",'image_tag', "phone", "test_score_of_general_ability", "paper_score",
                     "first_interviewer_user",
-                    "first_result", "second_interviewer_user", "second_result", "hr_interviewer_user", "hr_result"]
+                    "first_result", "second_interviewer_user", "second_result", "hr_interviewer_user", "hr_result","attachment_tag"]
     # 右侧筛选条件
     list_filter = ('city', 'first_result', 'second_result', 'hr_result',
                    'first_interviewer_user', 'second_interviewer_user', 'hr_interviewer_user')
@@ -26,6 +28,22 @@ class InterviewerAdmin(admin.ModelAdmin):
     ordering = ('hr_result', 'second_result', 'first_result',)
 
     actions = (myaction.export_model_as_csv, myaction.notify_interviewer,)
+
+    @admin.display(description='照片')
+    def image_tag(self, obj):
+        _picture = Picture.objects.get(id=obj.picture.id).file
+        if _picture:
+            return format_html('<img src="{}" style="width:100px;height:80px;"/>'.format(_picture.url))
+        return ""
+
+    @admin.display(description='简历')
+    def attachment_tag(self, obj):
+        if not obj.attachment:
+            return "-"
+        _attachment = Attachment.objects.get(id=obj.attachment.id).file
+        if _attachment:
+            return format_html('<a href="{0}" target="_blank">{1}</a>'.format(_attachment.url,_attachment.name.split("/")[1]))
+
 
     def get_group_names(self, user):
         group_names = []

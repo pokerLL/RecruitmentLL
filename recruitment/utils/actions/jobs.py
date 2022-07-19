@@ -6,6 +6,8 @@ def goto_interview(modeladmin, request, queryset):
         obj.save()
         candidate = Candidate()
         candidate.username = obj.username
+        candidate.picture = obj.picture
+        candidate.attachment = obj.attachment
         candidate.city = obj.city
         candidate.phone = obj.phone
         candidate.email = obj.email

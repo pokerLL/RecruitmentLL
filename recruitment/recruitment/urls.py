@@ -15,7 +15,8 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-
+from django.conf import settings
+from django.conf.urls.static import static
 from django.utils.translation import gettext_lazy as _
 
 urlpatterns = [
@@ -26,5 +27,9 @@ urlpatterns = [
     path('api-auth/', include('rest_framework.urls')),  # DRF AUTH
     path('api/', include('jobs.urls')),  # DRF API
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL,
+                          document_root=settings.MEDIA_ROOT)
 
 admin.site.site_header = _('匠果科技招聘管理系统')

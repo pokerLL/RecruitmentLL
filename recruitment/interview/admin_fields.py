@@ -1,5 +1,5 @@
-readonly_fields_first = ["userid", "username", "city", "phone", "email",
-                         "apply_position", "born_address", "gender", "candidate_remark", "bachelor_school",
+readonly_fields_first = [ "username", "city", "phone", "email",
+                         "apply_position", "from_address", "gender", "candidate_remark", "bachelor_school",
                          "master_school", "doctor_school", "major", "degree", "test_score_of_general_ability",
                          "paper_score", ]
 
@@ -19,8 +19,8 @@ readonly_fields_hr = readonly_fields_second + ["second_score", "second_learning_
 # 分组展示字段，分三块，基础信息、第一轮面试记录、第二轮面试（专业复试）、HR复试
 default_fieldsets = (
     (None, {'fields': (
-        "userid", ("username", "city", "phone"), ("email",
-                                                  "apply_position", "born_address", "gender", "candidate_remark"),
+         ("username", "city", "phone"), ("email",
+                                                  "apply_position", "from_address", "gender", "candidate_remark"),
         ("bachelor_school", "master_school", "doctor_school"), ("major",
                                                                 "degree"), "test_score_of_general_ability",
         "paper_score",)}),
@@ -39,8 +39,8 @@ default_fieldsets = (
 )
 
 default_fieldsets_first = (
-    (None, {'fields': ("userid", ("username", "city", "phone"),
-                       ("email", "apply_position", "born_address",
+    (None, {'fields': ( ("username", "city", "phone"),
+                       ("email", "apply_position", "from_address",
                         "gender", "candidate_remark"),
                        ("bachelor_school", "master_school",
                         "doctor_school"), ("major", "degree"),
@@ -52,8 +52,8 @@ default_fieldsets_first = (
 )
 
 default_fieldsets_second = (
-    (None, {'fields': ("userid", ("username", "city", "phone"),
-                       ("email", "apply_position", "born_address",
+    (None, {'fields': ( ("username", "city", "phone"),
+                       ("email", "apply_position", "from_address",
                         "gender", "candidate_remark"),
                        ("bachelor_school", "master_school",
                         "doctor_school"), ("major", "degree"),

@@ -1,6 +1,6 @@
 from django.contrib.auth.models import User
 from django.db import models
-from jobs.models import DEGREE_TYPE
+from jobs.models import DEGREE_TYPE,Picture,Attachment
 
 # 第一轮面试结果
 FIRST_INTERVIEW_RESULT_TYPE = ((u'建议复试', u'建议复试'), (u'待定', u'待定'), (u'放弃', u'放弃'))
@@ -15,6 +15,8 @@ HR_SCORE_TYPE = (('S', 'S'), ('A', 'A'), ('B', 'B'), ('C', 'C'))
 class Candidate(models.Model):
     # 基础信息
     username = models.CharField(max_length=135, null=True, verbose_name=u'姓名')
+    picture = models.ForeignKey(Picture,null=True, on_delete=models.SET_NULL,verbose_name=u'个人照片')
+    attachment = models.ForeignKey(Attachment, null=True, on_delete=models.SET_NULL, verbose_name='简历附件')
     city = models.CharField(max_length=135, null=True, verbose_name=u'城市')
     phone = models.CharField(max_length=135, null=True, verbose_name=u'手机号码')
     email = models.EmailField(max_length=135, null=True, blank=True, verbose_name=u'邮箱')
