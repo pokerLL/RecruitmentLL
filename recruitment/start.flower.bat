@@ -1,0 +1,1 @@
+celery -A recruitment flower --port=8089
