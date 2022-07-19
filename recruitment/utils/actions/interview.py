@@ -3,6 +3,8 @@ from django.http import HttpResponse
 from datetime import datetime
 import csv
 
+from sentry_sdk import capture_message,capture_exception
+
 # from utils.dingtalk import send_message
 from interview.tasks import send_dingtalk_message
 
@@ -41,13 +43,17 @@ def export_model_as_csv(modeladmin, request, queryset):
 @admin.action(description='通知面试官面试')
 def notify_interviewer(modeladmin, request, queryset):
     for obj in queryset:
-        candidate = obj.username
-        first_interviewer = obj.first_interviewer_user.username
-        second_interviewer = obj.second_interviewer_user.username
-        hr_interviewer = obj.hr_interviewer_user.username
-        msg = "候选人 %s 进入面试环节，亲爱的面试官，请准备好面试： %s ; %s ; %s ." % (
-            candidate, first_interviewer, second_interviewer, hr_interviewer)
-        print(msg)
-        send_dingtalk_message.delay(msg)
+        try:
+            candidate = obj.username
+            first_interviewer = obj.first_interviewer_user.username
+            second_interviewer = obj.second_interviewer_user.username
+            hr_interviewer = obj.hr_interviewer_user.username
+            msg = "候选人 %s 进入面试环节，亲爱的面试官，请准备好面试： %s ; %s ; %s ." % (
+                candidate, first_interviewer, second_interviewer, hr_interviewer)
+            capture_message(msg)
+            send_dingtalk_message.delay(msg)
+        except Exception as e:
+            capture_exception(e)
+
         # send_message("候选人 %s 进入面试环节，亲爱的面试官，请准备好面试： %s ; %s ; %s ." %
         #              (candidate, first_interviewer, second_interviewer, hr_interviewer))
