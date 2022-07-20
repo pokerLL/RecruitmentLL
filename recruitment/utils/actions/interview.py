@@ -3,8 +3,6 @@ from django.http import HttpResponse
 from datetime import datetime
 import csv
 
-from sentry_sdk import capture_message,capture_exception
-
 # from utils.dingtalk import send_message
 from interview.tasks import send_dingtalk_message
 
@@ -50,10 +48,10 @@ def notify_interviewer(modeladmin, request, queryset):
             hr_interviewer = obj.hr_interviewer_user.username
             msg = "候选人 %s 进入面试环节，亲爱的面试官，请准备好面试： %s ; %s ; %s ." % (
                 candidate, first_interviewer, second_interviewer, hr_interviewer)
-            capture_message(msg)
+            # capture_message(msg)
             send_dingtalk_message.delay(msg)
         except Exception as e:
-            capture_exception(e)
-
+            # capture_exception(e)
+            pass
         # send_message("候选人 %s 进入面试环节，亲爱的面试官，请准备好面试： %s ; %s ; %s ." %
         #              (candidate, first_interviewer, second_interviewer, hr_interviewer))
