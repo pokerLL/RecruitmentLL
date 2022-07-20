@@ -1,6 +1,6 @@
 from django.urls import path
 
-from jobs.views import JobViewSet, CityViewSet, ResumeViewSet, upload, PictureViewSet, AttachmentViewSet
+from jobs.views import JobViewSet, CityViewSet, ResumeViewSet, PictureViewSet, AttachmentViewSet
 from rest_framework.routers import DefaultRouter
 
 router = DefaultRouter()
@@ -11,7 +11,3 @@ router.register(r'picture', PictureViewSet, basename='picture')
 router.register(r'attachment', AttachmentViewSet, basename='attachment')
 
 urlpatterns = router.urls
-
-urlpatterns += [
-    path('upload/', upload),
-]

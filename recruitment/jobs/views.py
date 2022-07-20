@@ -31,23 +31,26 @@ class ResumeViewSet(viewsets.ViewSet):
     def create(self, request):
         data = request.data.dict()
         data = json.loads(list((data.keys()))[0])
-        Resume.objects.create(**data)
+        obj = Resume.objects.create(**data)
+        if obj:
+            return Response({'id': obj.id})
         return Response({})
 
 
 class PictureViewSet(viewsets.ViewSet):
     def create(self, request):
         data = request.data.dict()
-        picture = Picture.objects.create(**data)
-        return Response({'id': picture.id})
+        obj = Picture.objects.create(**data)
+        if obj:
+            return Response({'id': obj.id})
+        return Response({})
 
 
 class AttachmentViewSet(viewsets.ViewSet):
     def create(self, request):
         data = request.data.dict()
-        attachment = Attachment.objects.create(**data)
-        return Response({'id': attachment.id})
+        obj = Attachment.objects.create(**data)
+        if obj:
+            return Response({'id': obj.id})
+        return Response({})
 
-
-def upload(request):
-    return JsonResponse({"1": "2"})
