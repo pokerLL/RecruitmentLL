@@ -3,7 +3,13 @@
 
 软件架构：Django+Vue+Sentry+Celery+Webhook
 
-展示地址：http://121.4.176.100 http://121.4.176.100:8000；仓库地址：https://github.com/pokerLL/RecruitmentLL
+展示地址：
+
+对外招聘页面：http://121.4.176.100:3000 
+
+招聘后台：http://121.4.176.100:8000
+
+仓库地址：https://github.com/pokerLL/RecruitmentLL
 
 这是一个使用 Python Django 两天就可以开发出来的项目，经过逐步完善可以满足不同企业的招聘管理需求。 可集成企业域账号、发布职位、候选人可以投递简历、可以在面试过程中评估简历。 可以导入，导出候选人数据。
 
