@@ -90,18 +90,6 @@ const service = axios.create({
 })
 
 
-// //request拦截器：对请求参数进行预处理
-// service.interceptors.request.use(
-//     config => {
-//         // config.headers['Access-Control-Allow-Origin']='*'
-//         // config.headers['Access-Control-Allow-Headers']='Origin, X-Requested-With, Content-Type, Accept'
-//         // config.headers['Access-Control-Allow-Methods']='PUT,POST,GET,DELETE,OPTIONS'
-//         // config.headers['Content-Type']='application/json;charset=utf-8'
-//         return config
-//     },
-// )
-
-
 service.interceptors.response.use(
     response => {
         const res = response.data
@@ -110,7 +98,6 @@ service.interceptors.response.use(
             console.log('接口信息报错-res-', res.message)
             return Promise.reject(new Error(res.message || 'Error'))
         } else {
-            console.log(res);
             return res
         }
     },

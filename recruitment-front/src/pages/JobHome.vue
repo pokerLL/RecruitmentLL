@@ -31,7 +31,6 @@ function init_data() {
 
 function getList(params) {
   getJobList().then(res => {
-    console.log(res)
     joblist.value = res
   })
 }

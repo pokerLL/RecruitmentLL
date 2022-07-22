@@ -35,7 +35,6 @@ function init_data() {
 
 function getInfo(params) {
   getJobInfo(props.id).then(res => {
-    console.log(res)
     jobInfo.value = res[0]
   })
 }

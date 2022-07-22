@@ -141,7 +141,6 @@ const onSubmit = () => {
   // console.log(JSON.stringify(objData.form));
   let _data = JSON.stringify(objData.form)
   postResume(_data).then(res => {
-    console.log(res);
     if (res.id) {
       ElMessage({
         showClose: true,
@@ -156,7 +155,6 @@ const onSubmit = () => {
       })
     }
   }).catch(err => {
-    console.log(err);
     ElMessage({
         showClose: true,
         message: '简历投递失败',
@@ -189,7 +187,6 @@ const uploadUserPicture = () => {
 }
 
 const uploadUserPictureSuccess = (res) => {
-  console.log(res);
   objData.form.picture_id = res.id;
 }
 
@@ -200,7 +197,6 @@ const uploadAttachment = () => {
 }
 
 const uploadAttachmentSuccess = (res) => {
-  console.log(res);
   objData.form.attachment_id = res.id;
 }
 
